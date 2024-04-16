@@ -1,0 +1,32 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <title>Sito web</title>
+    </head>
+    <body>
+        <main>
+            {% block content %}
+            <div>
+                <h1>Riduci l'impatto ambientale</h1>
+                <h3>Scopri come cliccando sui bottoni</h3>
+            </div>
+
+            <div>
+                <ul>
+                    <li><a href="{{ url_for('riscaldamento_globale') }}" class="button__link"> Riscaldamento globale </a></li>
+                    <li><a href="{{ url_for('riscaldamento_globale') }}" class="button__link"> Riscaldamento globale 2</a></li>
+                    <li><a href="{{ url_for('riscaldamento_globale') }}" class="button__link"> Riscaldamento globale 3</a></li>
+                </ul>
+            </div>
+
+            <form action="{{ url_for('risposta') }}" method="post">
+                <label for="question">Domanda</label>
+                <input type="text" name="question" id="question" placeholder="Digita una domanda" required>
+                <button class="button" type="submit">Invia la domanda!</button>
+            </form>
+            {% endblock %}
+        </main>
+    </body>
+</html>
