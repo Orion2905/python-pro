@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Articoli sul Cambiamento Climatico</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Articoli sul Cambiamento Climatico</h1>
+        <ul>
+            {% for article in articles %}
+            <li class="article"><a href="/article/{{ loop.index }}"><button class="article-button">{{ article.title }}</button></a></li>
+            {% endfor %}
+        </ul>
+        <h2>Aggiungi un nuovo articolo</h2>
+        <form action="/submit_article" method="post">
+            <label for="title">Titolo:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content">Contenuto:</label><br>
+            <textarea id="content" name="content" rows="4" cols="50"></textarea><br><br>
+            <input type="submit" value="Invia">
+        </form>
+
+        <form action="/model" method="post">
+            <label for="url">url immagine:</label><br>
+            <input type="text" id="url" name="url"><br>
+            <input type="submit" value="Invia">
+        </form>
+    </div>    
+</body>
+</html>
