@@ -46,6 +46,29 @@ async def problemi_e_soluzioni(ctx):
     soluzione = soluzioni[problema]
     await ctx.send(f"la soluzione al problema {problema} è {soluzione}")
 
+@bot.command()
+async def cerca_soluzione(ctx, *, parola_chiave: str):
+    parola_chiave = parola_chiave.lower()  # Converte la parola chiave in minuscolo per garantire una corrispondenza non case-sensitive
+    problemi_trovati = []  # Lista per memorizzare i problemi contenenti la parola chiave
+
+    for problema, soluzione in soluzioni.items():
+        if parola_chiave in problema.lower():  # Controlla se la parola chiave è contenuta nel problema
+            problemi_trovati.append((problema, soluzione))  # Aggiunge il problema alla lista dei problemi trovati
+
+    if problemi_trovati:  # Se sono stati trovati problemi, invia i risultati all'utente
+        messaggio = "\n\n".join([f"Problema: {problema}\nSoluzione: {soluzione}" for problema, soluzione in problemi_trovati])
+        await ctx.send(f"Ecco i problemi che contengono '{parola_chiave}':\n\n{messaggio}")
+    else:
+        await ctx.send(f"Mi dispiace, non ho trovato problemi che contengono '{parola_chiave}'.")
+
+# Gestione degli errori per il comando cerca_soluzione
+@cerca_soluzione.error
+async def cerca_soluzione_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Per favore, specifica un problema da cercare.")
+    else:
+        await ctx.send("Si è verificato un errore durante la ricerca della soluzione. Assicurati di inserire un problema valido.")
+
 
 
 bot.run("La tua chiave discord qui")
