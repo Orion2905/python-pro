@@ -1,10 +1,13 @@
 import discord
 from discord.ext import commands
 import requests
-from model import get_class
+
+from keras.models import load_model
+from PIL import Image, ImageOps
+import numpy as np
 
 # Token del bot
-TOKEN = 'La tua chiave discord'
+TOKEN = 'la tua chiave discord qui'
 
 # Prefix del bot
 PREFIX = '!'
@@ -20,6 +23,24 @@ def elabora_rispota(risposta):
             return f"Questo oggetto va buttato in {category} [sicurezza del {round(float(risposta[1]), 2)} %]"
     else:
         return f"Questo oggetto va buttato in {categories[-1]}"
+
+def get_class(model_path, labels_path, image_path):
+    np.set_printoptions(suppress=True)
+    model = load_model(model_path, compile=False)
+    class_names = open(labels_path, "r", encoding="utf-8").readlines()
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    image = Image.open(image_path).convert("RGB")
+    size = (224, 224)
+    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+    image_array = np.asarray(image)
+    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
+    data[0] = normalized_image_array
+    prediction = model.predict(data)
+    index = np.argmax(prediction)
+    class_name = class_names[index]
+    confidence_score = prediction[0][index]
+    return(class_name[2:], confidence_score*100)
+
 
 intents = discord.Intents.default()
 intents.message_content = True
