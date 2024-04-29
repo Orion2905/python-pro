@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco di Selezione dei Secchi</title>
+</head>
+<body>
+    <h1>Livello: {{ livello }}</h1>
+    <form action="{{ url_for('game') }}" method="POST">
+        <img src="{{ url_for('static', filename=livello + '/' + immagine_da_indovinare) }}" alt="Rifiuto"><br>
+        
+        {% for secchio in secchi %}
+        <input type="radio" id="{{ secchio }}" name="secchio" value="{{ secchio }}">
+        <label for="{{ secchio }}"><img src="{{ url_for('static', filename='secchi/' + secchio + '.png') }}" alt="{{ secchio }}"></label><br>
+        {% endfor %}
+        
+        <button type="submit">Conferma selezione</button>
+    </form>
+</body>
+</html>

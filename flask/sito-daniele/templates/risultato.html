@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultato</title>
+</head>
+<body>
+    <h1>Risultato</h1>
+    <p>Hai completato {{ livelli_completati }} livelli correttamente su {{ num_livelli }}.</p>
+    <form action="/gioca" method="POST">
+        <button type="submit">Vai al prossimo livello</button>
+    </form>
+</body>
+</html>
